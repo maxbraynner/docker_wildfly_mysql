@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  bets79:
+    image: bets79
+    restart: on-failure
+    depends_on: 
+      - database
+    ports:
+      - '8080:8080'
+    environment:
+      DATABASE_USER: root
+      DATABASE_PASSWORD: 123
+      DATABASE_NAME: bets79
+      MYSQL_URI: database
+      DATASOURCE_NAME: bets79
+      PORT: 8080
+
+  database:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysqldata:/var/lib/mysql
+    # ports:
+    #   - 3306:3306
+    environment:
+      MYSQL_DATABASE: bets79
+      MYSQL_ROOT_PASSWORD: 123
+
+volumes: 
+  mysqldata:
